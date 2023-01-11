@@ -2,6 +2,8 @@
 
 The Thirsty Thrifty is a clean/minimalistic online liquor store where you can order spirits, beers, wines and accessories for a safe and convenient delivery. Simply enter the site, sign up or log in and start to shop!
 
+![alt text](https://i.imgur.com/dsaeADz.png)
+
 ## Technologies Used
 
 JavaScript, React, Node, Express, MondoDB/Mongoose along with the MERN stack infrastructure.
