@@ -1,5 +1,6 @@
 import styles from './OrderDetail.module.scss';
 import LineItem from '../LineItem/LineItem';
+import DeliveryAddress from "../DeliveryAddress/DeliveryAddress";
 
 // Used to display the details of any order, including the cart (unpaid order)
 export default function OrderDetail({ order, handleChangeQty, handleCheckout }) {
@@ -18,7 +19,7 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
       <div className={styles.OrderDetail}>
         <div className={styles.sectionHeading}>
           {order.isPaid ?
-            <span>ORDER <span className="smaller">{order.orderId}</span></span>
+            <span>ORDER<span className="smaller"> {order.orderId} </span></span>
             :
             <span>NEW ORDER</span>
           }
@@ -28,6 +29,9 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
           {lineItems.length ?
             <>
               {lineItems}
+              {!order.isPaid && (
+                <DeliveryAddress />
+              )}
               <section className={styles.total}>
                 {order.isPaid ?
                   <span className={styles.right}>TOTAL&nbsp;&nbsp;</span>
@@ -37,7 +41,7 @@ export default function OrderDetail({ order, handleChangeQty, handleCheckout }) 
                     onClick={handleCheckout}
                     disabled={!lineItems.length}
                   >CHECKOUT</button>
-                }
+                } 
                 <span>{order.totalQty}</span>
                 <span className={styles.right}>${order.orderTotal.toFixed(2)}</span>
               </section>

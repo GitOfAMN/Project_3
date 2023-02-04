@@ -6,11 +6,13 @@ import Logo from '../../components/Logo/Logo';
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 import OrderList from '../../components/OrderList/OrderList';
 import OrderDetail from '../../components/OrderDetail/OrderDetail';
+import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
 
 export default function OrderHistoryPage({ user, setUser }) {
   /*--- State --- */
   const [orders, setOrders] = useState([]);
   const [activeOrder, setActiveOrder] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   /*--- Side Effects --- */
   useEffect(function () {
@@ -29,6 +31,16 @@ export default function OrderHistoryPage({ user, setUser }) {
     setActiveOrder(order);
   }
 
+  function handleCheckout(e) {
+    e.preventDefault();
+    setShowForm(true);
+  }
+
+  function handleCancelCheckout(e) {
+    e.preventDefault();
+    setShowForm(false);
+  }
+
   /*--- Rendered UI --- */
   return (
     <main className={styles.OrderHistoryPage}>
@@ -42,9 +54,22 @@ export default function OrderHistoryPage({ user, setUser }) {
         activeOrder={activeOrder}
         handleSelectOrder={handleSelectOrder}
       />
-      <OrderDetail
-        order={activeOrder}
-      />
+      {activeOrder ? (
+        <>
+          <OrderDetail
+            order={activeOrder}
+            handleCheckout={handleCheckout}
+          />
+          {showForm && (
+            <DeliveryAddress
+              order={activeOrder}
+              handleCancelCheckout={handleCancelCheckout}
+            />
+          )}
+        </>
+      ) : (
+        <div className={styles.emptyMessage}>No orders to display</div>
+      )}
     </main>
   );
 }
